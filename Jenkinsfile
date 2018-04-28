@@ -12,8 +12,8 @@ node('maven') {
       openshift.withProject( 'tasks-test' ) {
         // Let's make the image ready to deploy as the new application in TEST
         openshift.tag('tasks:latest', 'tasks:test')
-        def dc = openshift.selector('dc', 'tasks')
-        def newDc = dc.rollout('latest')
+        //def dc = openshift.selector('dc', 'tasks')
+        def newDc = openshift.rollout('latest', 'dc/tasks')
         def latestDeploymentVersion = newDc.object().status.latestVersion
         def rc = openshift.selector('rc', "tasks-${latestDeploymentVersion}")
         rc.untilEach(1){
