@@ -11,3 +11,16 @@ spec:
     type: JenkinsPipeline
     jenkinsPipelineStrategy:
       jenkinsfilePath: Jenkinsfile
+  triggers:
+  - github:
+      secret: 0d0077a7643b3d2c
+    type: GitHub
+  - gitlab:
+      secret: 4542ce0d1d0b0010
+    type: GitLab
+  - bitbucket:
+      secret: 0a0c3d9c167c841d
+    type: Bitbucket
+  - generic:
+      secret: 4f12d962e1f27913
+    type: Generic
