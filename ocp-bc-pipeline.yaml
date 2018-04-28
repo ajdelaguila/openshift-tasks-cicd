@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: tasks-pipeline
+spec:
+  source:
+    type: Git
+    git:
+      uri: https://github.com/ajdelaguila/openshift-tasks-cicd.git
+  strategy:
+    type: JenkinsPipeline
+    jenkinsPipelineStrategy:
+      jenkinsfilePath: Jenkinsfile
