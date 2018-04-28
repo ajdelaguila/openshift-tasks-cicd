@@ -1,4 +1,4 @@
-node('mave') {
+node('maven') {
   stage('Building project') {
     println "Building project"
   }
