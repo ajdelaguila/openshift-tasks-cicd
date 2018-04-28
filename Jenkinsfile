@@ -12,12 +12,14 @@ node('maven') {
       openshift.withProject( 'tasks-test' ) {
         // Let's make the image ready to deploy as the new application in TEST
         openshift.tag('tasks:latest', 'tasks:test')
-        //def latestDeploymentVersion = openshift.selector('dc',"${APP_NAME}").object().status.latestVersion
-        //def rc = openshift.selector('rc', "${APP_NAME}-${latestDeploymentVersion}")
-        //rc.untilEach(1){
-        //    def rcMap = it.object()
-        //    return (rcMap.status.replicas.equals(rcMap.status.readyReplicas))
-        //}
+        def dc = openshift.selector('dc',"${APP_NAME}")
+        def newDc = dc.rollout('latest')
+        def latestDeploymentVersion = newDc.object().status.latestVersion
+        def rc = openshift.selector('rc', "${APP_NAME}-${latestDeploymentVersion}")
+        rc.untilEach(1){
+            def rcMap = it.object()
+            return (rcMap.status.replicas.equals(rcMap.status.readyReplicas))
+        }
       }
     }
      stage('Promoting to LIVE') {
